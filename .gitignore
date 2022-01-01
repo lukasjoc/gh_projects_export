@@ -1,0 +1,9 @@
+*~
+[._]*.sw[a-p]
+.netrwhist
+.DS_Store
+tags
+.env
+.env.local
+boards
+

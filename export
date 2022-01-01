@@ -1,0 +1,22 @@
+#!/bin/bash
+
+mkdir boards
+
+curl \
+    -u "$gh_user:$gh_token" \
+    https://api.github.com/users/$gh_user/projects > boards/boards.json
+
+for id in $(cat boards/boards.json | jq -c ".[].id"); do
+    mkdir -p "boards/$id"
+    curl \
+        -u "$gh_user:$gh_token" \
+        "https://api.github.com/projects/$id/columns" > "boards/$id/cols.json"
+
+    for card_url in $(cat "boards/$id/cols.json" | jq -r '.[].cards_url'); do
+        curl \
+            -u "$gh_user:$gh_token" \
+             "$card_url" > "boards/$id/cards.json"
+    done
+
+done
+
