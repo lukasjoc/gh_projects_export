@@ -15,7 +15,7 @@ for id in $(cat boards/boards.json | jq -c ".[].id"); do
     for card_url in $(cat "boards/$id/cols.json" | jq -r '.[].cards_url'); do
         curl \
             -u "$gh_user:$gh_token" \
-             "$card_url" > "boards/$id/cards.json"
+             "$card_url" >> "boards/$id/cards.json"
     done
 
 done
